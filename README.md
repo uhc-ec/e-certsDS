@@ -8,7 +8,7 @@ Certificados Eletrônicos com Assinatura Digital
 ## Uso
 
 ```sh
-./gera_certificados.sh <template.tex> <participantes.csv> <"Nome do Evento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
+./gerador.sh <template.tex> <participantes.csv> <"Nome do Evento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
 ```
 
 ## Descrição
@@ -67,6 +67,33 @@ Em outras palavras, o quinto QR Code autentica o conteúdo dos demais.
 5. Resumo criptográfico do código de autenticação HMAC do certificado. Ex: `78a47e94934ff015a81fe1326186213d1b29207161e401cd0ac578815476f2dc`
 
 ## Configuração servidores SSH
+
+Os certificados são publicados nos servidores *web* utilizando a ferramenta *rsync* sobre um túnel SSH seguro, que utiliza chaves públicas para autenticação.
+Para cada um dos servidores da lista, pode ser incluída uma configuração no arquivo padrão do SSH (*config*), na máquina e conta do próprio usuário que manipula a ferramenta.
+O arquivo *config* fica tipicamente em *~/.ssh/*.
+A seguir é apresentado um exemplo de configuração de dois servidores (*servidor1* e *servidor2*) remotos para publicação dos certificados. 
+
+```.sh
+Host servidor1
+	Hostname s1.certificados.org
+	User publicador
+	Port 22
+	IdentitiesOnly yes
+	PubkeyAuthentication yes
+	IdentityFile ~/.ssh/id_rsa_s1
+
+Host servidor2
+	Hostname s2.certificados.org
+	User publicador
+	Port 22
+	IdentitiesOnly yes
+	PubkeyAuthentication yes
+	IdentityFile ~/.ssh/id_rsa_s2
+
+
+```
+
+Utilizando o túnel SSH, o *rsync* necessita apenas copiar/sincronizar o diretório do repositório local de certificados com o diretório remoto de destino/publicação dos certificados nos servidores *web* *e.g.*, */var/www/certificados/* no *servidor1*).
 
 
 ## Ambientes / Distribuições GNU/Linux
