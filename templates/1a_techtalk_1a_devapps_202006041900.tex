@@ -1,0 +1,158 @@
+\documentclass[landscape]{article}
+\usepackage{courier}
+\renewcommand*\familydefault{\ttdefault} %% Only if the base font of the document is to be typewriter style
+\usepackage[T1]{fontenc}
+\usepackage[a4paper]{geometry}
+\usepackage{wallpaper}
+\usepackage{niceframe}
+\usepackage{xcolor}
+\usepackage{ulem}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{tmargin=0.5cm,bmargin=.5cm,
+lmargin=.5cm,rmargin=.5cm}
+\usepackage{multicol}
+\setlength{\columnseprule}{0.4pt}
+\columnwidth=0.3\textwidth
+
+\usepackage{setspace}
+
+\usepackage{lipsum}
+\usepackage{setspace}
+
+\usepackage{soul}
+\usepackage[doublespacing]{setspace}
+
+%%% SIGNATURES: BEGIN
+\usepackage{../sty_files/emerald}% for 1-4
+\usepackage{frcursive}% for 5
+\usepackage{inslrmin}% for 6
+%%% SIGNATURES: END
+
+\renewcommand{\baselinestretch}{1.0} 
+
+\usepackage{authblk}
+\usepackage{hyperref}
+
+\newcommand*{\email}[1]{%
+    \normalsize\href{mailto:#1}{#1}\par
+    }
+
+%\usepackage{draftwatermark}
+%\SetWatermarkText{Apenas para Revisão}
+%\SetWatermarkScale{0.35}
+%\SetWatermarkColor[gray]{0.80}
+%%\SetWatermarkFontSize{2cm}
+%\SetWatermarkAngle{45}
+
+
+\begin{document}
+
+%\TileWallPaper{4cm}{4cm}{background_grayscale.png}
+
+\centering
+\scalebox{2.8}{\color{green!30!black!60}
+\begin{minipage}{.33\textwidth}
+{\centering
+
+\vspace{1.5mm}
+
+\begin{minipage}{1\textwidth}
+\centering
+\includegraphics[height=.8cm]{../imgs/UniHacker_Logo_white.png}\hfill
+{\color{white}x} \hfill
+%\includegraphics[height=.8cm]{../imgs/unihacker_cert_top.png} 
+\includegraphics[height=.8cm]{../imgs/UniHacker_Logo_white.png}\hfill
+\end{minipage}
+
+\vspace{-6mm}
+
+    {\normalsize \bf Clube Universidade Hacker}\\
+
+\vspace{4mm}
+
+\textcolor{green!5!black!95}{
+    \tiny{\textbf{Série TechTalks: 1a DevApps} (Desenvolvimento de \textit{Apps Mobile}), em parceria com o \textbf{Programa \url{UniHacker.Club}}, realizada dia 04/06/2020, às 19:00.}}
+
+\vspace{3mm}
+
+% TIPO: OUVINTE, ORGANIZADOR, PALESTRANTE, ...
+\textcolor{red!30!black!90}
+{Certificado de} \textcolor{black}{\large \textsc{TAGTIPO}}
+
+\vspace{2mm}
+
+\textcolor{blue!30!black!90}{
+\footnotesize
+% NOME DO INDIO VEIO
+para \textbf{TAGNOME}}
+
+\vspace{-1mm}
+
+\textcolor{black}{
+\tiny
+% NUMERO DE HORAS
+{(TAGHORAS hora(s) de atividades)}
+}
+
+\vspace{2mm}
+}
+\end{minipage}
+}
+
+\vspace{3mm}
+
+\begin{minipage}{.9\textwidth}
+\centering
+{\color{blue!10!black}
+\scalebox{1.6}{
+\begin{tabular}{cccc}
+    {\iminfamily\setul{0.15ex}{}\ul{~~Diego Kreutz~~}} & 
+    & 
+    {\cursive\setul{0.15ex}{}\ul{~~Brandow Buenos~~}}
+    & \\
+    %& {\iminfamily\setul{0.15ex}{}\ul{~~Diego Kreutz~~}} & \\
+% ASSINANTES DO CERTIFICADO
+    Diego Kreutz &   & Brandow Buenos & \\
+    Organizador & & Colaborador & \\ 
+    \email{kreutz@unipampa.edu.br} & & \email{brandowbuenos@gmail.com} & \\ 
+\end{tabular}
+}}
+\end{minipage}
+
+\vfill
+
+\begin{minipage}{.9\textwidth}
+\centering
+\scalebox{1.8}{
+%\hfill 
+\includegraphics[height=1.5cm]{./qr_code_url.png}\hspace{9mm}
+\includegraphics[height=1.5cm]{./qr_code_url_sha256.png}\hspace{9mm}
+\includegraphics[height=1.5cm]{./qr_code_url_gpg.png}\hspace{9mm}
+%\includegraphics[height=1.2cm]{../imgs/unihacker_cert_top.png}\hspace{9mm}
+\includegraphics[height=1.5cm]{./qr_code_gpg_key.png}\hspace{9mm}
+\includegraphics[height=1.5cm]{./qr_code_hmac_qr_codes.png}
+}
+\end{minipage}
+
+\vfill
+
+\begin{minipage}{.9\textwidth}
+\centering
+{\color{black}
+\scalebox{1.4}{
+E-mail: \email{info@unihacker.club} \hspace{4mm} Web: \url{https://unihacker.club}
+}
+\scalebox{1.4}{
+{\tiny {\color{white}O Programa UniHacker.Club está registrado sob o número \textbf{01.023.19} no SIPPEE da UNIPAMPA.}}
+}
+\scalebox{1.4}{
+{\tiny ** O \textbf{Programa UniHacker.Club} está registrado sob o número \textbf{01.023.19} no SIPPEE da UNIPAMPA. **}
+}
+}
+\end{minipage}
+
+\vfill
+%\vspace{2mm}
+
+\end{document}
