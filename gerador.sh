@@ -1,7 +1,7 @@
 #!/bin/bash
 
 [ "$1" ] && [ -f "$1" ] && [ "$2" ] && [ -f "$2" ] && [ "$3" ] && [ "$4" ] && [ "$5" ] && [ "$6" ] && [ "$7" ] || { echo "";
-    echo "Usage: $0 <template.tex> <participantes.csv> <GPG_PASS> <nome_do_evento> <HMAC_PASS> <HISTORY_PASS> <mode: test|hot>"; 
+    echo "Usage: $0 <template.tex> <participantes.csv> <GPG_PASS> <nome_do_evento> <HMAC_PASS> <HISTORY_PASS> <mode: teste|deploy>"; 
     echo "";
     echo "  <template.tex> = ./templates/certificado.tex"; 
     echo "  <participantes.csv> = ./nome_email_tipo_horas.csv"; 
@@ -9,9 +9,9 @@
     echo "  <GPG_PASS> = MinhaSenhaGPG"; 
     echo "  <HMAC_PASS> = MinhaSenhaHMAC"; 
     echo "  <HISTORY_PASS> = SenhaDoArquivoHistorico"; 
-    echo "  <mode: test|hot>"; 
-    echo "         test = run in TEST mode (generate only localy)";
-    echo "         hot  = generate, publish and notify by email";
+    echo "  <mode: teste|deploy>"; 
+    echo "         teste = run in TEST mode (generate only localy)";
+    echo "         deploy  = generate, publish and notify by email";
     echo "";
     exit; 
 }
@@ -26,7 +26,7 @@ do
 done
 
 MODE=$(echo $7 | tr '[:upper:]' '[:lower:]')
-if [ "$MODE" != "test" ] && [ "$MODE" != "hot" ]
+if [ "$MODE" != "teste" ] && [ "$MODE" != "deploy" ]
 then
     echo ""
     echo "[ERROR] Invalide mode \"$MODE\""
@@ -53,7 +53,7 @@ HISTORY_PASS="$6"
 HISTORY_STORE="history.db"
 INDEX_HTML="etc/index.html"
 
-[ "$MODE" = "test" ] || {
+[ "$MODE" = "teste" ] || {
     [ -f $HISTORY_STORE.7z ] || { 
         echo "# History File" > $HISTORY_STORE
         7z a -y -p$HISTORY_PASS $HISTORY_STORE.7z $HISTORY_STORE
@@ -157,7 +157,7 @@ ZIP_PASS=$(echo $L_FILE.txt | shasum -a 256 | cut -c1-16)
 gpg2 --batch --passphrase $GPG_PASS --pinentry-mode loopback --local-user $GPG_USER --output $DIR/$L_FILE.txt.7z.asc --armor --detach-sig $DIR/$L_FILE.txt.7z
 [ $? -eq 0 ] || { exit; }
 
-[ "$MODE" = "test" ] || {
+[ "$MODE" = "teste" ] || {
     7z x -y -p$HISTORY_PASS $HISTORY_STORE.7z
     if [ $? -eq 0 ]
     then
@@ -177,7 +177,7 @@ popd
 
 echo ""
 echo "Publishing certificates ... "
-[ "$MODE" = "test" ] || {
+[ "$MODE" = "teste" ] || {
     cp $INDEX_HTML $DIR/
     for RSYNC_HOST in $RSYNC_HOSTS
     do
@@ -193,7 +193,7 @@ do
     EMAIL=$(echo $DATA | cut -d":" -f2)
     PDF_FILE=$(echo $DATA | cut -d":" -f3)
     echo -n "Sending PDF certificate URLs by email to $EMAIL ... "
-    [ "$MODE" = "test" ] || {
+    [ "$MODE" = "teste" ] || {
         python3 e-mailer.py "$FULLNAME" "$EMAIL" "$SERVER_URL/$DIR/$PDF_FILE" "$EVENT_NAME"
     }
     echo "done."
@@ -203,13 +203,13 @@ rm -f $CSV_FILE.email
 
 echo ""
 echo -n "Sending summary to project leaders ... "
-[ "$MODE" = "test" ] || {
+[ "$MODE" = "teste" ] || {
     python2.7 envia_sumario.py "$EVENT_NAME" "$SERVER_URL/$DIR/$L_FILE.txt.7z" "$SERVER_URL/$DIR/$L_FILE.txt.7z.asc" "$ZIP_PASS" "$N_PARTICIPANTS" "$N_HOURS" "$GPG_USER"
 }
 echo "done."
 echo ""
 
-[ "$MODE" != "test" ] || {
+[ "$MODE" != "teste" ] || {
     echo ""
     echo "[INFO] Running on TEST mode. No email was actually sent."
     echo ""
