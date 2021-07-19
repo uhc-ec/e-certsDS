@@ -1,4 +1,4 @@
-<h1 align="center">E-certsDS</h1>
+<h1 align="center">E-certsDS v0.2 (beta)</h1>
 <h5 align="center">
 Certificados Eletrônicos com Assinatura Digital
 </h5>
