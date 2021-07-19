@@ -56,15 +56,20 @@ O quarto QR Code é meramente técnico e opcional, uma vez que a chave pública 
 Finalmente, o último QR Code apresenta o resumo criptográfico resultante da aplicação da primitiva HMAC, utilizando uma chave secreta conhecida apenas pelo emissor dos certificados, sobre os dados dos outros quatro QR Codes.  
 Em outras palavras, o quinto QR Code autentica o conteúdo dos demais.
 
-1. Link do PDF original do certificado. Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf`
+1. Link do PDF original do certificado.\
+Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf`
 
-2. Link do arquivo contendo o resumo criptográfico SHA256 do PDF. Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.sha256`
+2. Link do arquivo contendo o resumo criptográfico SHA256 do PDF.\
+Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.sha256`
 
-3. Link do arquivo *.asc*, que contém a assinatura digital OpenPGP do certificado. Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.asc`
+3. Link do arquivo *.asc*, que contém a assinatura digital OpenPGP do certificado.\
+Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.asc`
 
-4. Identificador da chave pública OpenPGP e instruções para download. Ex: `gpg --recv-key C6BC50CA3BF7A752`
+4. Identificador da chave pública OpenPGP e instruções para download.\
+Ex: `gpg --recv-key C6BC50CA3BF7A752`
 
-5. Resumo criptográfico do código de autenticação HMAC do certificado. Ex: `78a47e94934ff015a81fe1326186213d1b29207161e401cd0ac578815476f2dc`
+5. Resumo criptográfico do código de autenticação HMAC do certificado.\
+Ex: `78a47e94934ff015a81fe1326186213d1b29207161e401cd0ac578815476f2dc`
 
 ## Configuração servidores SSH
 
