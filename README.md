@@ -17,8 +17,6 @@ A Figura a seguir ilustra a organização e operação do script:
 ![e-certs-model](/imgs/e-certs-model.png?raw=true "e-certs-model")
 
 A partir de um template latex com *tags* (1), um arquivo contendo os dados dos participantes (2) e configurações do servidor responsável por armazenar os dados, o script publicará os certificados nos servidores(1) e enviará um link de para os e-mails dos participantes(6).
-****
-completar
 
 Exemplo de certificado gerado com o e-certs:
 ![e-certs-model](/imgs/certificado-mauricio.png "e-certs-certificate")
