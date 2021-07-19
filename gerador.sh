@@ -194,7 +194,7 @@ do
     PDF_FILE=$(echo $DATA | cut -d":" -f3)
     echo -n "Sending PDF certificate URLs by email to $EMAIL ... "
     [ "$MODE" = "test" ] || {
-        python3 send_cert_link.py "$FULLNAME" "$EMAIL" "$SERVER_URL/$DIR/$PDF_FILE" "$EVENT_NAME"
+        python3 e-mailer.py "$FULLNAME" "$EMAIL" "$SERVER_URL/$DIR/$PDF_FILE" "$EVENT_NAME"
     }
     echo "done."
 done < $CSV_FILE.email
@@ -204,7 +204,7 @@ rm -f $CSV_FILE.email
 echo ""
 echo -n "Sending summary to project leaders ... "
 [ "$MODE" = "test" ] || {
-    python2.7 send_summary.py "$EVENT_NAME" "$SERVER_URL/$DIR/$L_FILE.txt.7z" "$SERVER_URL/$DIR/$L_FILE.txt.7z.asc" "$ZIP_PASS" "$N_PARTICIPANTS" "$N_HOURS" "$GPG_USER"
+    python2.7 envia_sumario.py "$EVENT_NAME" "$SERVER_URL/$DIR/$L_FILE.txt.7z" "$SERVER_URL/$DIR/$L_FILE.txt.7z.asc" "$ZIP_PASS" "$N_PARTICIPANTS" "$N_HOURS" "$GPG_USER"
 }
 echo "done."
 echo ""
