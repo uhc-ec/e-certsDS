@@ -3,24 +3,41 @@
 Certificados Eletrônicos com Assinatura Digital
 </h5>
 
->Sistema desenvolvido em Bash Script e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
+>Sistema desenvolvido em Bash Scripting e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
 
-## Uso
-
-```sh
-./gerador.sh <template.tex> <participantes.csv> <"AbbrDoEvento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
-```
-
-## Descrição
-A Figura a seguir ilustra a organização e operação da ferramenta:
+## Apresentação
+A figura a seguir ilustra a organização e operação da ferramenta.
 
 ![e-certs-model](/imagens/e-certs-model.png?raw=true "e-certs-model")
 
-A partir de um template LaTeX com *tags* (1), um arquivo contendo os dados dos participantes (2) e configurações do servidor responsável por armazenar os dados, a ferramenta publicará os certificados nos servidores (5) e enviará um link dos certificados para os e-mails dos participantes (6).
+A partir de um template LaTeX com *tags* pre-definidas (1) e um arquivo contendo os dados dos participantes (2), a ferramenta gera e publica (5) os certificados em servidores Web. Além disso, a ferramenta também envia o link (6) dos certificados publicados para os e-mails dos participantes do evento ou atividade.
 
-Exemplo de certificado gerado com o e-certs:
+A imagem a seguir apresenta um exemplo de certificado gerado.
+
 ![e-certs-model](/imagens/certificado-mauricio.png "e-certs-certificate")
 
+## Os QR Codes do certificado
+Os três primeiros QR Codes seguem o padrão de distribuição dos arquivos de instalação (arquivos ISO) de distribuições GNU/Linux.
+Cada arquivo *.iso* acompanha um arquivo de resumos criptográficos e um segundo arquivo *.asc* para verificação da assinatura OpenPGP.
+Com estas informações em mãos, assumindo que o responsável pela assinatura digital dos certificados é pré-definido e conhecido (i.e., nome e email), os usuários podem verificar a integridade e a autenticidade dos certificados.
+O quarto QR Code é meramente técnico e opcional, uma vez que a chave pública OpenPGP pode ser recuperada através do email do autor da assinatura digital. 
+Finalmente, o último QR Code apresenta o resumo criptográfico resultante da aplicação da primitiva HMAC, utilizando uma chave secreta conhecida apenas pelo emissor dos certificados, sobre os dados dos outros quatro QR Codes.  
+Em outras palavras, o quinto QR Code autentica o conteúdo dos demais.
+
+1. Link do PDF original do certificado.\
+Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf`
+
+2. Link do arquivo contendo o resumo criptográfico SHA256 do PDF.\
+Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.sha256`
+
+3. Link do arquivo *.asc*, que contém a assinatura digital OpenPGP do certificado.\
+Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.asc`
+
+4. Identificador da chave pública OpenPGP e instruções para download.\
+Ex: `gpg --recv-key C6BC50CA3BF7A752`
+
+5. Resumo criptográfico do código de autenticação HMAC do certificado.\
+Ex: `78a47e94934ff015a81fe1326186213d1b29207161e401cd0ac578815476f2dc`
 
 ## Arquivos de Entrada
 1. **Template LaTeX contendo os componentes textuais e visuais**, como logomarcas, informações sobre o evento e *tags* para preenchimento automatizado dos certificados.
@@ -48,28 +65,12 @@ Para o software funcionar em distribuições baseadas no Debian, instale as depe
 sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync texlive texlive-fonts-extra texlive-latex-extra -y
 ```
 
-## QR Codes
-Os três primeiros QR Codes seguem o padrão de distribuição dos arquivos de instalação (arquivos ISO) de distribuições GNU/Linux.
-Cada arquivo *.iso* acompanha um arquivo de resumos criptográficos e um segundo arquivo *.asc* para verificação da assinatura OpenPGP.
-Com estas informações em mãos, assumindo que o responsável pela assinatura digital dos certificados é pré-definido e conhecido (\emph{i.e.}, nome e email), os usuários podem verificar a integridade e a autenticidade dos certificados.
-O quarto QR Code é meramente técnico e opcional, uma vez que a chave pública OpenPGP pode ser recuperada através do email do autor da assinatura digital. 
-Finalmente, o último QR Code apresenta o resumo criptográfico resultante da aplicação da primitiva HMAC, utilizando uma chave secreta conhecida apenas pelo emissor dos certificados, sobre os dados dos outros quatro QR Codes.  
-Em outras palavras, o quinto QR Code autentica o conteúdo dos demais.
 
-1. Link do PDF original do certificado.\
-Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf`
+## Uso
 
-2. Link do arquivo contendo o resumo criptográfico SHA256 do PDF.\
-Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.sha256`
-
-3. Link do arquivo *.asc*, que contém a assinatura digital OpenPGP do certificado.\
-Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf.asc`
-
-4. Identificador da chave pública OpenPGP e instruções para download.\
-Ex: `gpg --recv-key C6BC50CA3BF7A752`
-
-5. Resumo criptográfico do código de autenticação HMAC do certificado.\
-Ex: `78a47e94934ff015a81fe1326186213d1b29207161e401cd0ac578815476f2dc`
+```sh
+./gerador.sh <template.tex> <participantes.csv> <"AbbrDoEvento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
+```
 
 ## Configuração servidores SSH
 
