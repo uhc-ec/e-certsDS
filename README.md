@@ -101,9 +101,9 @@ Host servidor2
 Utilizando o túnel SSH, o *rsync* necessita apenas copiar/sincronizar o diretório do repositório local de certificados com o diretório remoto de destino/publicação dos certificados nos servidores *web* *e.g.*, */var/www/certificados/* no *servidor1*).
 
 
-## Ambientes / Distribuições GNU/Linux
+## Ambientes 
 
-A ferramenta já foi testada e utilizada nos seguintes ambientes / distribuições GNU/Linux:
+A ferramenta já foi testada e utilizada na prática nos seguintes ambientes:
 
 Debian 10:
 
@@ -115,4 +115,4 @@ macOS Catalina 10.15.7:
 
 - Kernel = `Darwin 19.6.0 Kernel Version 19.6.0: Tue Jan 12 22:13:05 PST 2021; root:xnu-6153.141.16~1/RELEASE_X86_64 x86_64`
 - Python = `Python 3.9.5 e Python 2.7.18`
-- Ferramentas = `rsync  version 3.2.3 protocol version 31, p7zip 16.02_5, qrencode 4.0.2, gpg (GnuPG) 2.2.14 (libgcrypt 1.8.4), OpenSSH_8.1p1, LibreSSL 2.7.3, texlive 2020`
+- Ferramentas = `rsync  version 3.2.3 protocol version 31, p7zip 16.02_5, qrencode 4.0.2, gpg (GnuPG) 2.2.14 (libgcrypt 1.8.4), OpenSSH_8.1p1, LibreSSL 2.7.3, shasum 6.01, OpenSSL 1.1.1k, texlive 2020`
