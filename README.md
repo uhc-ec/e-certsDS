@@ -116,3 +116,7 @@ macOS Catalina 10.15.7:
 - Kernel = `Darwin 19.6.0 Kernel Version 19.6.0: Tue Jan 12 22:13:05 PST 2021; root:xnu-6153.141.16~1/RELEASE_X86_64 x86_64`
 - Python = `Python 3.9.5 e Python 2.7.18`
 - Ferramentas = `rsync  version 3.2.3 protocol version 31, p7zip 16.02_5, qrencode 4.0.2, gpg (GnuPG) 2.2.14 (libgcrypt 1.8.4), OpenSSH_8.1p1, LibreSSL 2.7.3, shasum 6.01, OpenSSL 1.1.1k, texlive 2020`
+
+## Creditos
+* Maurício El Uri
+* Diego Kreutz
