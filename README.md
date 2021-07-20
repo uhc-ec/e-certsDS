@@ -8,15 +8,15 @@ Certificados Eletrônicos com Assinatura Digital
 ## Uso
 
 ```sh
-./gerador.sh <template.tex> <participantes.csv> <"Nome do Evento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
+./gerador.sh <template.tex> <participantes.csv> <"AbbrDoEvento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
 ```
 
 ## Descrição
-A Figura a seguir ilustra a organização e operação do script:
+A Figura a seguir ilustra a organização e operação da ferramenta:
 
 ![e-certs-model](/imagens/e-certs-model.png?raw=true "e-certs-model")
 
-A partir de um template latex com *tags* (1), um arquivo contendo os dados dos participantes (2) e configurações do servidor responsável por armazenar os dados, o script publicará os certificados nos servidores(1) e enviará um link de para os e-mails dos participantes(6).
+A partir de um template LaTeX com *tags* (1), um arquivo contendo os dados dos participantes (2) e configurações do servidor responsável por armazenar os dados, a ferramenta publicará os certificados nos servidores (5) e enviará um link dos certificados para os e-mails dos participantes (6).
 
 Exemplo de certificado gerado com o e-certs:
 ![e-certs-model](/imagens/certificado-mauricio.png "e-certs-certificate")
@@ -110,3 +110,8 @@ Debian 10:
 - Kernel = `Linux deb 4.19.0-17-amd64 #1 SMP Debian 4.19.194-1 (2021-06-10) x86_64 GNU/Linux`
 
 - Python = `Python 2.7.16`
+
+macOS Catalina 10.15.7:
+
+- Kernel = `Darwin 19.6.0 Kernel Version 19.6.0: Tue Jan 12 22:13:05 PST 2021; root:xnu-6153.141.16~1/RELEASE_X86_64 x86_64`
+- Python = `Python 3.9.5`, `Python 2.7.18`
