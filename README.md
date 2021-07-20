@@ -53,7 +53,7 @@ Bob Souza,bob@gmail.com,Ouvinte,2
 Eve Martins,eve@gmail.com,Ouvinte,2
 ```
 ## Dependências
-Para o software funcionar em distribuições baseadas no Debian, instale as dependências necessárias com o comando a seguir:
+Para utilizar a ferramenta em distribuições baseadas no GNU/Debian (e.g., Debian 10, Ubuntu 18.04), instale as dependências necessárias utilizando o comando:
 ```sh
 sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync texlive texlive-fonts-extra texlive-latex-extra -y
 ```
@@ -73,7 +73,7 @@ sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync t
 7. **Modo de execução**. Pode ser *teste* ou *deploy*. Onde teste apenas gerará os certificados e deploy enviará os certificados para os e-mails dos participantes e para os servidores.
 
 
-## Configuração servidores SSH
+## Acesso aos servidores
 
 Os certificados são publicados nos servidores *web* utilizando a ferramenta *rsync* sobre um túnel SSH seguro, que utiliza chaves públicas para autenticação.
 Para cada um dos servidores da lista, pode ser incluída uma configuração no arquivo padrão do SSH (*config*), na máquina e conta do próprio usuário que manipula a ferramenta.
