@@ -16,13 +16,12 @@ A imagem a seguir apresenta um exemplo de certificado gerado.
 
 ![e-certs-model](/imagens/certificado-mauricio.png "e-certs-certificate")
 
-## Os QR Codes do certificado
+## QR Codes do certificado
 Os três primeiros QR Codes seguem o padrão de distribuição dos arquivos de instalação (arquivos ISO) de distribuições GNU/Linux.
 Cada arquivo *.iso* acompanha um arquivo de resumos criptográficos e um segundo arquivo *.asc* para verificação da assinatura OpenPGP.
 Com estas informações em mãos, assumindo que o responsável pela assinatura digital dos certificados é pré-definido e conhecido (i.e., nome e email), os usuários podem verificar a integridade e a autenticidade dos certificados.
 O quarto QR Code é meramente técnico e opcional, uma vez que a chave pública OpenPGP pode ser recuperada através do email do autor da assinatura digital. 
-Finalmente, o último QR Code apresenta o resumo criptográfico resultante da aplicação da primitiva HMAC, utilizando uma chave secreta conhecida apenas pelo emissor dos certificados, sobre os dados dos outros quatro QR Codes.  
-Em outras palavras, o quinto QR Code autentica o conteúdo dos demais.
+Finalmente, o último QR Code apresenta o resumo criptográfico resultante da aplicação da primitiva HMAC, utilizando uma chave secreta conhecida apenas pelo emissor dos certificados, sobre os dados dos outros quatro QR Codes. Em outras palavras, o quinto QR Code autentica o conteúdo dos demais.
 
 1. Link do PDF original do certificado.\
 Ex: `https://certificado.unihacker.club/20200611/97658b389b9be5ed568f95cb98a6ad0e.pdf`
@@ -47,18 +46,12 @@ Certificado de TAGTIPO
 para TAGNOME
 TAGHORAS hora(s) de atividades.
 ```
-2. **Arquivo CSV contendo os dados de entrada**. Estes dados servirão para preencher os campos idenfificados nas *tags* e deverão conter as informações básicas dos participantes do evento, como nome completo, endereço de email, tipo de participação e número de horas, *e.g.*:
+2. **Arquivo CSV contendo os dados de entrada** são utilizados para preencher os campos idenfificados nas *tags* e devem conter as informações básicas dos participantes do evento, como nome completo, endereço de email, tipo de participação e número de horas, *e.g.*:
 ```csv
 Alice Silva,alice@gmail.com,Co-Organizador,1
 Bob Souza,bob@gmail.com,Ouvinte,2
 Eve Martins,eve@gmail.com,Ouvinte,2
 ```
-3. **Nome do Evento**. 
-4. **Senha GPG**.  Senha utilizada para geração das assinaturas utilizando a chave privada OpenPGP.
-5. **Senha HMAC**. Senha que é utilizada pela função HMAC para gerar os códigos de autenticação.
-6. **Senha do arquivo histórico**. Senha do banco de dados que contém o histórico de eventos e certificados gerados.
-7. **Modo de execução**. Pode ser *teste* ou *deploy*. Onde teste apenas gerará os certificados e deploy enviará os certificados para os e-mails dos participantes e para os servidores.
-
 ## Dependências
 Para o software funcionar em distribuições baseadas no Debian, instale as dependências necessárias com o comando a seguir:
 ```sh
@@ -71,6 +64,14 @@ sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync t
 ```sh
 ./gerador.sh <template.tex> <participantes.csv> <"AbbrDoEvento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
 ```
+1. **Nome do template** / arquivo LaTeX.
+2. **Nome do arquivo CSV** com os dados dos participantes.
+3. **Abreviação do Nome do Evento**.
+4. **Senha GPG**, utilizada para geração das assinaturas utilizando a chave privada OpenPGP.
+5. **Senha HMAC**, utilizada pela função HMAC para gerar os códigos de autenticação dos QR Codes.
+6. **Senha do arquivo histórico**, utilizada para cifrar e decifrar o banco de dados local, que contém o histórico de eventos e certificados gerados.
+7. **Modo de execução**. Pode ser *teste* ou *deploy*. Onde teste apenas gerará os certificados e deploy enviará os certificados para os e-mails dos participantes e para os servidores.
+
 
 ## Configuração servidores SSH
 
