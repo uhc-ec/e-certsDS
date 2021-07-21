@@ -1,12 +1,12 @@
 #!/bin/bash
 
 [ "$1" ] && [ -f "$1" ] && [ "$2" ] && [ -f "$2" ] && [ "$3" ] && [ "$4" ] && [ "$5" ] && [ "$6" ] && [ "$7" ] || { echo "";
-    echo "Usage: $0 <template.tex> <participantes.csv> <GPG_PASS> <nome_do_evento> <HMAC_PASS> <HISTORY_PASS> <mode: teste|deploy>"; 
+    echo "Usage: $0 <template.tex> <participantes.csv> <GPG_KEY_PASS> <nome_do_evento> <HMAC_PASS> <HISTORY_PASS> <mode: teste|deploy>"; 
     echo "";
     echo "  <template.tex> = ./templates/certificado.tex"; 
     echo "  <participantes.csv> = ./nome_email_tipo_horas.csv"; 
     echo "  <nome_evento> = 1oHackingDay"; 
-    echo "  <GPG_PASS> = MinhaSenhaGPG"; 
+    echo "  <GPG_KEY_PASS> = MinhaSenhaGPG"; 
     echo "  <HMAC_PASS> = MinhaSenhaHMAC"; 
     echo "  <HISTORY_PASS> = SenhaDoArquivoHistorico"; 
     echo "  <mode: teste|deploy>"; 
@@ -44,10 +44,10 @@ TEMPLATE_TEX="$1"
 TEMPLATE_FILES=$(grep -E "(.pdf|.png|.eps|.jpg)" $TEMPLATE_TEX | grep -v "^%" | sed 's/^.*{\(.*\....\)}.*/\1/')
 CSV_FILE="$2"
 
-GPG_EMAIL="assina@unihacker.club"
-GPG_USER="C6BC50CA3BF7A752" # pub key ID
+GPG_EMAIL=$(cat etc/gpg.cfg | grep "GPG_KEY_ID" | cut -d"=" -f2)
+GPG_USER=$(cat etc/gpg.cfg | grep "GPG_PUB_KEY_ID" | cut -d"=" -f2)
 EVENT_NAME="$3"
-GPG_PASS="$4"
+GPG_KEY_PASS="$4"
 HMAC_PASS="$5"
 HISTORY_PASS="$6"
 HISTORY_STORE="history.db"
@@ -62,7 +62,7 @@ INDEX_HTML="etc/index.html"
     }
 }
 
-SERVER_URL=$(cat etc/url_dos_certificados.cfg)
+SERVER_URL=$(cat etc/url_publica.cfg | grep -v "^#")
 RSYNC_HOSTS=$(cat etc/servidores.cfg | grep -v "^#")
 
 DIR=`date +%Y%m%d`
@@ -106,7 +106,7 @@ do
     eval "sed 's/TAGTIPO/$TAGTIPO/' $TMP_FILE > .tmp"; mv .tmp $TMP_FILE
     eval "sed 's/TAGNOME/$FULLNAME/' $TMP_FILE > .tmp"; mv .tmp $TMP_FILE
     eval "sed 's/TAGHORAS/$TAGHORAS/' $TMP_FILE > .tmp"; mv .tmp $TMP_FILE
-    CERT_FILE=$(openssl dgst -md5 -hmac $GPG_PASS $TMP_FILE | awk '{ print $2 }')
+    CERT_FILE=$(openssl dgst -md5 -hmac $GPG_KEY_PASS $TMP_FILE | awk '{ print $2 }')
     [ $? -eq 0 ] || { exit; }
     run_cmd mv $TMP_FILE $DIR/$CERT_FILE.tex
 	
@@ -119,9 +119,9 @@ do
     [ $? -eq 0 ] || { exit; }
     qrencode -t PNG -o qr_code_url_gpg.png "$SERVER_URL/$DIR/$PDF_FILE.asc"
     [ $? -eq 0 ] || { exit; }
-    qrencode -t PNG -o qr_code_gpg_key.png "gpg --recv-key $GPG_USER" 
+    qrencode -t PNG -o qr_code_gpg_key.png "gpg --recv-key $GPG_PUB_KEY_ID" 
     [ $? -eq 0 ] || { exit; }
-    echo "$SERVER_URL/$DIR/$PDF_FILE $SERVER_URL/$DIR/$PDF_FILE.sha256 $SERVER_URL/$DIR/$PDF_FILE.asc gpg --recv-key $GPG_USER" > hmac_sha256.txt
+    echo "$SERVER_URL/$DIR/$PDF_FILE $SERVER_URL/$DIR/$PDF_FILE.sha256 $SERVER_URL/$DIR/$PDF_FILE.asc gpg --recv-key $GPG_PUB_KEY_ID" > hmac_sha256.txt
     HMAC_SHA256=$(openssl dgst -sha256 -hmac $HMAC_PASS hmac_sha256.txt | awk '{ print $2 }')
     [ $? -eq 0 ] || { exit; }
     qrencode -t PNG -o qr_code_hmac_qr_codes.png "$HMAC_SHA256"
@@ -132,10 +132,10 @@ do
     [ $? -eq 0 ] || { exit; }
 
     [ ! -f $CERT_FILE.pdf.asc ] || { rm -f $CERT_FILE.pdf.asc; }
-    gpg2 --batch --passphrase $GPG_PASS --pinentry-mode loopback --local-user $GPG_USER --output $CERT_FILE.pdf.asc --armor --detach-sig $CERT_FILE.pdf 
+    gpg2 --batch --passphrase $GPG_KEY_PASS --pinentry-mode loopback --local-user $GPG_PUB_KEY_ID --output $CERT_FILE.pdf.asc --armor --detach-sig $CERT_FILE.pdf 
     [ $? -eq 0 ] || { exit; }
     [ ! -f $CERT_FILE.pdf.sha256.asc ] || { rm -f $CERT_FILE.pdf.sha256.asc; }
-    gpg2 --batch --passphrase $GPG_PASS --pinentry-mode loopback --local-user $GPG_USER --output $CERT_FILE.pdf.sha256.asc --armor --detach-sig $CERT_FILE.pdf.sha256 
+    gpg2 --batch --passphrase $GPG_KEY_PASS --pinentry-mode loopback --local-user $GPG_PUB_KEY_ID --output $CERT_FILE.pdf.sha256.asc --armor --detach-sig $CERT_FILE.pdf.sha256 
     [ $? -eq 0 ] || { exit; }
     popd
     echo "$FULLNAME:$EMAIL:$PDF_FILE" >> $CSV_FILE.email
@@ -153,7 +153,7 @@ ZIP_PASS=$(echo $L_FILE.txt | shasum -a 256 | cut -c1-16)
 [ $? -eq 0 ] || { exit; }
 
 [ ! -f $DIR/$L_FILE.txt.7z.asc ] || { rm -f $DIR/$L_FILE.txt.7z.asc; }
-gpg2 --batch --passphrase $GPG_PASS --pinentry-mode loopback --local-user $GPG_USER --output $DIR/$L_FILE.txt.7z.asc --armor --detach-sig $DIR/$L_FILE.txt.7z
+gpg2 --batch --passphrase $GPG_KEY_PASS --pinentry-mode loopback --local-user $GPG_PUB_KEY_ID --output $DIR/$L_FILE.txt.7z.asc --armor --detach-sig $DIR/$L_FILE.txt.7z
 [ $? -eq 0 ] || { exit; }
 
 [ "$MODE" = "teste" ] || {
@@ -203,7 +203,7 @@ rm -f $CSV_FILE.email
 echo ""
 echo -n "Sending summary to project leaders ... "
 [ "$MODE" = "teste" ] || {
-    python2.7 envia_sumario.py "$EVENT_NAME" "$SERVER_URL/$DIR/$L_FILE.txt.7z" "$SERVER_URL/$DIR/$L_FILE.txt.7z.asc" "$ZIP_PASS" "$N_PARTICIPANTS" "$N_HOURS" "$GPG_USER"
+    python2.7 envia_sumario.py "$EVENT_NAME" "$SERVER_URL/$DIR/$L_FILE.txt.7z" "$SERVER_URL/$DIR/$L_FILE.txt.7z.asc" "$ZIP_PASS" "$N_PARTICIPANTS" "$N_HOURS" "$GPG_PUB_KEY_ID"
 }
 echo "done."
 echo ""
