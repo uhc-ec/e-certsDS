@@ -132,8 +132,8 @@ A ferramenta foi testada e utilizada na prática nos seguintes ambientes:
 Debian 10:
 
 - Kernel = `Linux deb 4.19.0-17-amd64 #1 SMP Debian 4.19.194-1 (2021-06-10) x86_64 GNU/Linux`
-
 - Python = `Python 2.7.16`
+- Ferramentas = `rsync version 3.1.3 protocol version 31, p7zip 16.02+dfsg-6, qrencode version 4.0.2, gpg (GnuPG) 2.2.12 (libgcrypt 1.8.4), `
 
 macOS Catalina 10.15.7:
 
