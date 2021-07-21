@@ -6,11 +6,9 @@ Certificados Eletrônicos com Assinatura Digital
 >Sistema desenvolvido em Bash Scripting e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
 
 ## Apresentação
-A figura a seguir ilustra a organização e operação da ferramenta.
+A Figura a seguir ilustra a organização e operação da ferramenta. A partir de um template LaTeX com *tags* pre-definidas (1) e um arquivo contendo os dados dos participantes (2), a ferramenta gera e publica (5) os certificados em servidores Web. Além disso, a ferramenta também envia o link dos certificados publicados (6) para os e-mails dos participantes do evento ou atividade.
 
 ![e-certs-model](/imagens/e-certs-model.png?raw=true "e-certs-model")
-
-A partir de um template LaTeX com *tags* pre-definidas (1) e um arquivo contendo os dados dos participantes (2), a ferramenta gera e publica (5) os certificados em servidores Web. Além disso, a ferramenta também envia o link (6) dos certificados publicados para os e-mails dos participantes do evento ou atividade.
 
 A imagem a seguir apresenta um exemplo de certificado gerado.
 
@@ -52,14 +50,67 @@ Alice Silva,alice@gmail.com,Co-Organizador,1
 Bob Souza,bob@gmail.com,Ouvinte,2
 Eve Martins,eve@gmail.com,Ouvinte,2
 ```
-## Dependências
+
+## Instalação de Dependências
 Para utilizar a ferramenta em distribuições baseadas no GNU/Debian (e.g., Debian 10, Ubuntu 18.04), instale as dependências necessárias utilizando o comando:
 ```sh
-sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync texlive texlive-fonts-extra texlive-latex-extra -y
+sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync -y
+sudo apt-get install texlive texlive-fonts-extra texlive-latex-extra -y
 ```
 
+## Configuração dos servidores
 
-## Uso
+Os certificados são publicados nos servidores *web* utilizando a ferramenta *rsync* sobre um túnel SSH, que utiliza chaves públicas para autenticação.
+
+Nos servidores é necessário gerar as chaves e configurar o SSH para acesso remoto utilizando chaves públicas. A seguir, é ilustrado o processo de geração das chaves e as linhas de configuração do serviço SSH dos servidores.
+
+```.sh
+# no servidor1
+ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa_s1
+# no servidor2
+ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa_s2 
+# em ambos os servidores
+cp -a ~/.ssh/id_rsa_s?.pub ~/.ssh/authorized_keys
+```
+
+Em ambos os servidores (habilitar o uso de chaves públicas e indicar o arquivo das chaves autorizadas), caso o serviço SSH ainda não esteja devidamente configurado. Os comandos a seguir devem ser executados como root.
+```.sh
+echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config 
+echo "AuthorizedKeysFile	.ssh/authorized_keys" >> /etc/ssh/sshd_config 
+```
+
+A chave privada deve ser copiada para a máquina / conta onde o gerador de certificados será executado. Exemplo: 
+```.sh
+# assumindo usuário "alice" na máquina "meu-pc"
+scp servidor1:/home/publicador/.ssh/id_rsa_s1 ~/.ssh/
+scp servidor2:/home/publicador/.ssh/id_rsa_s2 ~/.ssh/
+```
+
+Finalmente, para cada um dos servidores da lista, pode ser incluída uma configuração no arquivo padrão do SSH (*config*), na máquina e conta do próprio usuário (e.g. alice) que manipula a ferramenta.
+O arquivo *config* fica tipicamente em *~/.ssh/*.
+A seguir é apresentado um exemplo de configuração de dois servidores (*servidor1* e *servidor2*) remotos para publicação dos certificados. 
+
+```.sh
+Host servidor1
+	Hostname 192.168.1.100
+	User publicador
+	Port 22
+	IdentitiesOnly yes
+	PubkeyAuthentication yes
+	IdentityFile ~/.ssh/id_rsa_s1
+
+Host servidor2
+	Hostname 192.168.1.101
+	User publicador
+	Port 22
+	IdentitiesOnly yes
+	PubkeyAuthentication yes
+	IdentityFile ~/.ssh/id_rsa_s2
+```
+
+Utilizando o túnel SSH, o *rsync* necessita apenas copiar/sincronizar o diretório do repositório local de certificados com o diretório remoto de destino/publicação dos certificados nos servidores *web* *e.g.*, */var/www/certificados/* no *servidor1*).
+
+## Utilização
 
 ```sh
 ./gerador.sh <template.tex> <participantes.csv> <"AbbrDoEvento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
@@ -72,40 +123,9 @@ sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync t
 6. **Senha do arquivo histórico**, utilizada para cifrar e decifrar o banco de dados local, que contém o histórico de eventos e certificados gerados.
 7. **Modo de execução**. Pode ser *teste* ou *deploy*. Onde teste apenas gerará os certificados e deploy enviará os certificados para os e-mails dos participantes e para os servidores.
 
-
-## Acesso aos servidores
-
-Os certificados são publicados nos servidores *web* utilizando a ferramenta *rsync* sobre um túnel SSH seguro, que utiliza chaves públicas para autenticação.
-Para cada um dos servidores da lista, pode ser incluída uma configuração no arquivo padrão do SSH (*config*), na máquina e conta do próprio usuário que manipula a ferramenta.
-O arquivo *config* fica tipicamente em *~/.ssh/*.
-A seguir é apresentado um exemplo de configuração de dois servidores (*servidor1* e *servidor2*) remotos para publicação dos certificados. 
-
-```.sh
-Host servidor1
-	Hostname s1.certificados.org
-	User publicador
-	Port 22
-	IdentitiesOnly yes
-	PubkeyAuthentication yes
-	IdentityFile ~/.ssh/id_rsa_s1
-
-Host servidor2
-	Hostname s2.certificados.org
-	User publicador
-	Port 22
-	IdentitiesOnly yes
-	PubkeyAuthentication yes
-	IdentityFile ~/.ssh/id_rsa_s2
-
-
-```
-
-Utilizando o túnel SSH, o *rsync* necessita apenas copiar/sincronizar o diretório do repositório local de certificados com o diretório remoto de destino/publicação dos certificados nos servidores *web* *e.g.*, */var/www/certificados/* no *servidor1*).
-
-
 ## Ambientes 
 
-A ferramenta já foi testada e utilizada na prática nos seguintes ambientes:
+A ferramenta foi testada e utilizada na prática nos seguintes ambientes:
 
 Debian 10:
 
