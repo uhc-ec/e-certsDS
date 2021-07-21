@@ -58,7 +58,7 @@ sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync -
 sudo apt-get install texlive texlive-fonts-extra texlive-latex-extra -y
 ```
 
-## Configuração acesso aos servidores
+## Configuração de acesso aos servidores
 
 Os certificados são publicados nos servidores *web* utilizando a ferramenta *rsync* sobre um túnel SSH, que utiliza chaves públicas para autenticação.
 
