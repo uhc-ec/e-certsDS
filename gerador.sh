@@ -62,9 +62,8 @@ INDEX_HTML="etc/index.html"
     }
 }
 
-SERVER_URL="https://certificado.unihacker.club"
-SERVER_DIR="/var/www/certificados/"
-RSYNC_HOSTS="c1 c2"
+SERVER_URL=$(cat etc/url_dos_certificados.cfg)
+RSYNC_HOSTS=$(cat etc/servidores.cfg | grep -v "^#")
 
 DIR=`date +%Y%m%d`
 [ -d $DIR ] || { mkdir -p $DIR; }
@@ -181,7 +180,7 @@ echo "Publishing certificates ... "
     cp $INDEX_HTML $DIR/
     for RSYNC_HOST in $RSYNC_HOSTS
     do
-        rsync -av $DIR $RSYNC_HOST:$SERVER_DIR
+        rsync -av $DIR $RSYNC_HOST
     done
 }
 echo "Publication ... done."
