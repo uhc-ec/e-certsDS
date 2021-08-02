@@ -126,7 +126,7 @@ Host servidor2
 
 Utilizando o túnel SSH, o *rsync* necessita apenas copiar/sincronizar o diretório do repositório local de certificados com o diretório remoto de destino/publicação dos certificados nos servidores *web* *e.g.*, */var/www/certificados/* no *servidor1*).
 
-                                                                                                                                                                                                        NOTA: o *rsync* deve estar instalado nos servidores. Além disso, deve ser configurado um servidor Web e um diretório para publicação dos certificados.
+NOTA: o *rsync* deve estar instalado nos servidores. Além disso, deve ser configurado um servidor Web e um diretório para publicação dos certificados.
 
 ## Configurando o script
 Os arquivos de configuração estão na pasta /etc/
