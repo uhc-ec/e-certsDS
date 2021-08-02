@@ -129,11 +129,17 @@ Utilizando o túnel SSH, o *rsync* necessita apenas copiar/sincronizar o diretó
 NOTA: o *rsync* deve estar instalado nos servidores. Além disso, deve ser configurado um servidor Web e um diretório para publicação dos certificados.
 
 ## Configurando o script
+
 Os arquivos de configuração estão na pasta /etc/
-**1 - emailer.cfg** - Nome e senha do enviador de e-mails
-**2 - gpg.cfg** - iIdentificador da chave gpg e da chave gpg pública
-**3 - servidores.cfg** - Localização das pastas que deverão ser sincronizadas nos servidores, com o identificador do ssh, e caminho da pasta. e.g.: servidor1:/var/www/certificados/
+
+**1 - emailer.cfg** - Nome e senha do enviador de e-mails.
+
+**2 - gpg.cfg** - iIdentificador da chave gpg e da chave gpg pública.
+
+**3 - servidores.cfg** - Localização das pastas que deverão ser sincronizadas nos servidores, com o identificador do ssh, e caminho da pasta. e.g.: servidor1:/var/www/certificados/.
+
 **4 - url_publica.cfg** - Url pública do(s) certificado(s) no(s) servidor(es) web. Link que será inserido nos certificados.
+
 
 ## Utilização
 
@@ -164,6 +170,6 @@ macOS Catalina 10.15.7:
 - Python = `Python 3.9.5 e Python 2.7.18`
 - Ferramentas = `rsync  version 3.2.3 protocol version 31, p7zip 16.02_5, qrencode 4.0.2, gpg (GnuPG) 2.2.14 (libgcrypt 1.8.4), OpenSSH_8.1p1, LibreSSL 2.7.3, shasum 6.01, OpenSSL 1.1.1k, texlive 2020`
 
-## Creditos
+## Créditos
 * Maurício El Uri
 * Diego Kreutz
