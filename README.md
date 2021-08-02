@@ -54,7 +54,7 @@ Eve Martins,eve@gmail.com,Ouvinte,2
 ## Passo a passo e-certs
 
 1. **Preparando o ambiente**
-2. 
+
 A ferramenta foi desenvolvida para os sistemas Debian 10, Ubuntu 18.04 e macOS Catalina 10.15.7.
 
 1.1 **Tutorial Debian e Ubuntu**
