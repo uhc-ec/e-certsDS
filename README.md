@@ -51,6 +51,17 @@ Bob Souza,bob@gmail.com,Ouvinte,2
 Eve Martins,eve@gmail.com,Ouvinte,2
 ```
 
+## Passo a passo e-certs
+1. **Preparando o ambiente**
+A ferramenta foi desenvolvida para os sistemas Debian 10 e macOS Catalina 10.15.7.
+Após ter uma máquina virtual configurada, é necessário instalar o git para clonar este repositório:
+```sudo apt-get install git -y```
+
+e então clonar o repositório para dentro da pasta e-certs com o comando:
+
+```git clone https://github.com/uhc-ec/e-certsDS.git ~/e-certsDS/```
+
+
 ## Instalação de Dependências
 Para utilizar a ferramenta em distribuições baseadas no GNU/Debian (e.g., Debian 10, Ubuntu 18.04), instale as dependências necessárias utilizando o comando:
 ```sh
