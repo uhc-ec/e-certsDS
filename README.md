@@ -4,7 +4,6 @@ Certificados Eletrônicos com Assinatura Digital
 </h5>
 
 >Sistema desenvolvido em Bash Scripting e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
-```
 
 ## Passo a passo e-certs
 
