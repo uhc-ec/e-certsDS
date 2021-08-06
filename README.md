@@ -1,3 +1,11 @@
+<h1 align="center">E-certsDS v0.2 (beta)</h1>
+<h5 align="center">
+Certificados Eletrônicos com Assinatura Digital
+</h5>
+
+>Sistema desenvolvido em Bash Scripting e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
+
+
 ## Passo a passo e-certs
 
 1. **Preparando o ambiente**
