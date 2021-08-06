@@ -21,8 +21,7 @@ A ferramenta foi desenvolvida para os sistemas Debian 10, Ubuntu 18.04 e macOS C
 
 1.1.3 Entrar na pasta e dar permissão de execução para os scripts:
 ```cd e-certsDS/
-sudo chmod +x -R *.sh
-```
+sudo chmod +x -R *.sh/ 
 
 1.1.4 Instalação de Dependências
 Instale as dependências necessárias utilizando o comando:
