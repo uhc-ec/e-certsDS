@@ -1,10 +1,3 @@
-<h1 align="center">E-certsDS v0.2 (beta)</h1>
-<h5 align="center">
-Certificados Eletrônicos com Assinatura Digital
-</h5>
-
->Sistema desenvolvido em Bash Scripting e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
-
 ## Passo a passo e-certs
 
 1. **Preparando o ambiente**
@@ -12,18 +5,20 @@ Certificados Eletrônicos com Assinatura Digital
 A ferramenta foi desenvolvida para os sistemas Debian 10, Ubuntu 18.04 e macOS Catalina 10.15.7.
 
 1.1 **Tutorial Debian e Ubuntu**
+Instale o Debian com o seguinte comando:
 
-1.1.1 Após ter uma máquina virtual configurada, é necessário instalar o git para clonar este repositório:
 ```sudo apt-get install git -y```
 
-1.1.2 Clonar o repositório para dentro da pasta e-certs com o comando:
+Clonando o repositório:
 ```git clone https://github.com/uhc-ec/e-certsDS.git ~/e-certsDS/```
 
-1.1.3 Entrar na pasta e dar permissão de execução para os scripts:
-```cd e-certsDS/
-sudo chmod +x -R *.sh/ 
+Entre na pasta e dar permissão de execução para os scripts:
+```
+cd e-certsDS/
+sudo chmod +x -R *.sh
+```
 
-1.1.4 Instalação de Dependências
+Instalação de Dependências
 Instale as dependências necessárias utilizando o comando:
 ```sh
 sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync -y
