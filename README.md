@@ -7,15 +7,13 @@ Certificados Eletrônicos com Assinatura Digital
 
 ## Passo a passo e-certs
 
-**Preparando o ambiente**
+**Preparando o ambiente (linux)**
 
-A ferramenta foi desenvolvida para os sistemas Debian 10, Ubuntu 18.04 e macOS Catalina 10.15.7.
-
-Instale o git com o seguinte comando:
+Instalação do git:
 
 ```sudo apt-get install git -y```
 
-Clonando o repositório:
+Clone do repositório:
 
 ```git clone https://github.com/uhc-ec/e-certsDS.git ~/e-certsDS/```
 
