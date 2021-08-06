@@ -5,19 +5,18 @@ Certificados Eletrônicos com Assinatura Digital
 
 >Sistema desenvolvido em Bash Scripting e Python para  geração, publicação e validação de certificados eletrônicos digitalmente assinados utilizando chaves do padrão OpenPGP.
 
-
 ## Passo a passo e-certs
 
-1. **Preparando o ambiente**
+**1. Preparando o ambiente**
 
 A ferramenta foi desenvolvida para os sistemas Debian 10, Ubuntu 18.04 e macOS Catalina 10.15.7.
 
-1.1 **Tutorial Debian e Ubuntu**
-Instale o Debian com o seguinte comando:
+Instale o git com o seguinte comando:
 
 ```sudo apt-get install git -y```
 
 Clonando o repositório:
+
 ```git clone https://github.com/uhc-ec/e-certsDS.git ~/e-certsDS/```
 
 Entre na pasta e dar permissão de execução para os scripts:
@@ -26,7 +25,6 @@ cd e-certsDS/
 sudo chmod +x -R *.sh
 ```
 
-Instalação de Dependências
 Instale as dependências necessárias utilizando o comando:
 ```sh
 sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync -y
@@ -92,21 +90,36 @@ NOTA: o *rsync* deve estar instalado nos servidores. Além disso, deve ser confi
 Os arquivos de configuração estão na pasta /etc/
 
 **1 - emailer.cfg** - Nome e senha do enviador de e-mails.
+```
+SENDER=assina@unihacker.club
+APPPASS=abcd-abcd-abacd-abcd
+```
 
 **2 - gpg.cfg** - iIdentificador da chave gpg e da chave gpg pública.
+```
+GPG_KEY_ID=assina@unihacker.club
+GPG_PUB_KEY_ID=A1BC12CD3EF4G567
+```
 
-**3 - servidores.cfg** - Localização das pastas que deverão ser sincronizadas nos servidores, com o identificador do ssh, e caminho da pasta. e.g.: servidor1:/var/www/certificados/.
+**3 - servidores.cfg** - Localização das pastas que deverão ser sincronizadas nos servidores, com o identificador do ssh, e caminho da pasta.
+```
+servidor1:/var/www/certificados/
+servidor2:/var/www/certificados/
+servidor3:/var/www/certificados/
+```
 
 **4 - url_publica.cfg** - Url pública do(s) certificado(s) no(s) servidor(es) web. Link que será inserido nos certificados.
-
+```
+https://certificado.unihacker.club
+```
 
 ## Utilização
 
 ```sh
 ./gerador.sh <template.tex> <participantes.csv> <"AbbrDoEvento"> <SenhaGPG> <SenhaHMAC> <SenhaDoHistory> <[teste/deploy]>
 ```
-1. **Nome do template** / arquivo LaTeX.
-2. **Nome do arquivo CSV** com os dados dos participantes.
+1. **Nome do template** caminho do arquivo LaTeX.
+2. **Nome do arquivo CSV** caminho do arquivo com os dados dos participantes.
 3. **Abreviação do Nome do Evento**.
 4. **Senha GPG**, utilizada para geração das assinaturas utilizando a chave privada OpenPGP.
 5. **Senha HMAC**, utilizada pela função HMAC para gerar os códigos de autenticação dos QR Codes.
