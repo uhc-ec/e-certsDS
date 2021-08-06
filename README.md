@@ -7,7 +7,7 @@ Certificados Eletrônicos com Assinatura Digital
 
 ## Passo a passo e-certs
 
-**1. Preparando o ambiente**
+**Preparando o ambiente**
 
 A ferramenta foi desenvolvida para os sistemas Debian 10, Ubuntu 18.04 e macOS Catalina 10.15.7.
 
