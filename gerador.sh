@@ -45,7 +45,7 @@ TEMPLATE_FILES=$(grep -E "(.pdf|.png|.eps|.jpg)" $TEMPLATE_TEX | grep -v "^%" | 
 CSV_FILE="$2"
 
 GPG_EMAIL=$(cat etc/gpg.cfg | grep "GPG_KEY_ID" | cut -d"=" -f2)
-GPG_USER=$(cat etc/gpg.cfg | grep "GPG_PUB_KEY_ID" | cut -d"=" -f2)
+GPG_PUB_KEY_ID=$(cat etc/gpg.cfg | grep "GPG_PUB_KEY_ID" | cut -d"=" -f2)
 EVENT_NAME="$3"
 GPG_KEY_PASS="$4"
 HMAC_PASS="$5"
