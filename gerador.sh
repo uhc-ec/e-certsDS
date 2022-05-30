@@ -127,7 +127,7 @@ do
     qrencode -t PNG -o qr_code_hmac_qr_codes.png "$HMAC_SHA256"
     [ $? -eq 0 ] || { exit; }
     pdflatex -interaction=nonstopmode $CERT_FILE.tex
-    [ $? -eq 1 ] || { exit; }
+    [ $? -eq 0 ] || { exit; }
     shasum -a 256 $CERT_FILE.pdf > $CERT_FILE.pdf.sha256
     [ $? -eq 0 ] || { exit; }
 
@@ -153,7 +153,7 @@ ZIP_PASS=$(echo $L_FILE.txt | shasum -a 256 | cut -c1-16)
 [ $? -eq 0 ] || { exit; }
 
 [ ! -f $DIR/$L_FILE.txt.7z.asc ] || { rm -f $DIR/$L_FILE.txt.7z.asc; }
-gpg2 --batch --passphrase $GPG_KEY_PASS --pinentry-mode loopback --local-user $GPG_PUB_KEY_ID --output $DIR/$L_FILE.txt.7z.asc --armor --detach-sig $DIR/$L_FILE.txt.7z
+gpg2 --batch --armor --detach-sig --passphrase $GPG_KEY_PASS --pinentry-mode loopback --local-user $GPG_PUB_KEY_ID --output $DIR/$L_FILE.txt.7z.asc $DIR/$L_FILE.txt.7z
 [ $? -eq 0 ] || { exit; }
 
 [ "$MODE" = "teste" ] || {
