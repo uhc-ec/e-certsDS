@@ -140,4 +140,3 @@ macOS Catalina 10.15.7:
 
 ## Créditos
 * Maurício El Uri
-* Diego Kreutz
