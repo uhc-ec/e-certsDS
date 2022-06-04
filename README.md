@@ -23,7 +23,7 @@ sudo chmod +x -R *.sh
 
 Instale as dependências necessárias utilizando o comando:
 ```sh
-sudo apt-get install gnupg2 openssh-server p7zip-full python2.7 qrencode rsync -y
+sudo apt-get install gnupg2 openssh-client p7zip-full python2.7 qrencode rsync -y
 sudo apt-get install texlive texlive-fonts-extra texlive-latex-extra -y
 ```
 
